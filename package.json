@@ -1,0 +1,17 @@
+{
+  "name": "condense-cockpit-dealer-assistant-backend",
+  "version": "1.0.0",
+  "description": "MSIL/RBIN digital cockpit dealer-side diagnostic assistant — L1 symptom match, L2 live-telemetry-grounded analysis, L3 escalation to Bosch",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "MOCK_MODE=true node index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.15"
+  }
+}

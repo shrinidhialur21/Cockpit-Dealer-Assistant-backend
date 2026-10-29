@@ -1,0 +1,135 @@
+{
+  "_note": "Seed knowledge base — NOT real Bosch/MSIL case history. Synthesized from the DTC rules already defined in Automotive-Cockpit-transform's FAULT_CATALOG, so the taxonomy (codes, categories, OTA-fixability) stays consistent with the live telemetry pipeline. Replace/extend with real resolved cases as the customer provides them — same file shape, no code changes needed elsewhere.",
+  "cases": [
+    {
+      "id": "CASE-001",
+      "tier_hint": "L1",
+      "dtc_ref": "COCKPIT-HMI-001",
+      "category": "display",
+      "dealer_symptom": "Screen goes black for a second and comes back on its own, happens a couple times a day",
+      "resolution_summary": "Known intermittent black-screen glitch on current software build. If it recurs fewer than 3x/day, no action needed — cosmetic only. If more frequent, treat as active and move to telemetry check.",
+      "ota_fixable": true,
+      "ota_package": "DISPLAY_DRIVER_FIX_v1"
+    },
+    {
+      "id": "CASE-002",
+      "tier_hint": "L1",
+      "dtc_ref": "COCKPIT-CONN-002",
+      "category": "connectivity",
+      "dealer_symptom": "Android Auto keeps disconnecting every few minutes",
+      "resolution_summary": "Most common cause is a worn/loose USB cable or a non-MFi-rated cable. Ask the dealer to swap the cable and port first — resolves the large majority of these without needing a software fix.",
+      "ota_fixable": true,
+      "ota_package": "PROJECTION_STACK_FIX_v1"
+    },
+    {
+      "id": "CASE-003",
+      "tier_hint": "L1",
+      "dtc_ref": "COCKPIT-CONN-003",
+      "category": "connectivity",
+      "dealer_symptom": "CarPlay call audio cuts out mid-call",
+      "resolution_summary": "Usually a Bluetooth/CarPlay handoff conflict when both are paired simultaneously. Ask customer to forget and re-pair Bluetooth once CarPlay is connected via cable.",
+      "ota_fixable": true,
+      "ota_package": "PROJECTION_STACK_FIX_v1"
+    },
+    {
+      "id": "CASE-004",
+      "tier_hint": "L1",
+      "dtc_ref": "COCKPIT-DC-001",
+      "category": "telemetry",
+      "dealer_symptom": "Customer mentions a notification about a failed system update download",
+      "resolution_summary": "Background log-upload failures are usually transient network issues on the customer's home Wi-Fi and self-resolve on the next successful sync. No dealer action needed unless it persists across multiple visits.",
+      "ota_fixable": false,
+      "ota_package": null
+    },
+    {
+      "id": "CASE-005",
+      "tier_hint": "L2",
+      "dtc_ref": "COCKPIT-SYS-002",
+      "category": "software",
+      "dealer_symptom": "Infotainment feels sluggish, apps take a while to open",
+      "resolution_summary": "Symptom alone isn't conclusive — sluggishness can be normal cold-boot behavior or an early sign of an App-Not-Responding (ANR) loop. Pull live CPU utilization and system error state before advising; if CPU is sustained above 85% or an ANR is active, push the HMI performance patch.",
+      "ota_fixable": true,
+      "ota_package": "HMI_PERF_PATCH_v1"
+    },
+    {
+      "id": "CASE-006",
+      "tier_hint": "L2",
+      "dtc_ref": "COCKPIT-THERM-001",
+      "category": "hardware",
+      "dealer_symptom": "Customer says the screen area near the top felt warm after a long drive",
+      "resolution_summary": "Description alone doesn't distinguish normal operating warmth from an actual thermal fault — check the live SoC thermal reading. Only treat as a fault above 65 degC (critical above 85 degC); this is a hardware condition, not OTA-fixable, and needs a workshop thermal inspection if confirmed.",
+      "ota_fixable": false,
+      "ota_package": null
+    },
+    {
+      "id": "CASE-007",
+      "tier_hint": "L2",
+      "dtc_ref": "COCKPIT-STOR-001",
+      "category": "storage",
+      "dealer_symptom": "Voice assistant and map downloads are failing intermittently",
+      "resolution_summary": "Commonly a storage-capacity issue, but the reported baseline utilization on this platform is normally around 98% (not itself a fault). Only flag as a real issue if live storage utilization is confirmed above roughly 99%; if so the storage-cleanup OTA package resolves it.",
+      "ota_fixable": true,
+      "ota_package": "STORAGE_CLEANUP_OTA_v1"
+    },
+    {
+      "id": "CASE-008",
+      "tier_hint": "L2",
+      "dtc_ref": "COCKPIT-GPU-001",
+      "category": "performance",
+      "dealer_symptom": "Reverse camera feed stutters occasionally",
+      "resolution_summary": "Could be a display refresh issue or genuine GPU load. Confirm via live GPU utilization — if sustained above 85%, the GPU driver update resolves the stutter; if utilization is normal, look at the camera harness instead (not a software issue).",
+      "ota_fixable": true,
+      "ota_package": "GPU_DRIVER_UPDATE_v1"
+    },
+    {
+      "id": "CASE-009",
+      "tier_hint": "L3",
+      "dtc_ref": "COCKPIT-PWR-001",
+      "category": "electrical",
+      "dealer_symptom": "System randomly reboots while driving, customer reports no clear pattern",
+      "resolution_summary": "If live telemetry confirms an abnormal voltage reading, this is an electrical-system fault, not software. No OTA fix exists. Requires Bosch engineering review of the wiring harness / power supply — escalate.",
+      "ota_fixable": false,
+      "ota_package": null
+    },
+    {
+      "id": "CASE-010",
+      "tier_hint": "L3",
+      "dtc_ref": "COCKPIT-SYS-001",
+      "category": "software",
+      "dealer_symptom": "Unit fully crashed and needed a manual power cycle to recover",
+      "resolution_summary": "A confirmed fatal system error / crash loop can sometimes be resolved by the HMI crash hotfix, but if it recurs after the OTA push, the crash signature needs direct Bosch engineering analysis (possible deeper firmware issue) — escalate with the crash log reference.",
+      "ota_fixable": true,
+      "ota_package": "HMI_CRASH_HOTFIX_v1"
+    },
+    {
+      "id": "CASE-011",
+      "tier_hint": "L3",
+      "dtc_ref": null,
+      "category": "unknown",
+      "dealer_symptom": "Customer reports an issue that doesn't match any known symptom pattern, or is inconsistent/hard to reproduce",
+      "resolution_summary": "No matching case and live telemetry is inconclusive or contradicts the reported symptom. Don't guess — escalate to Bosch with the full transcript and telemetry snapshot rather than speculating on a fix.",
+      "ota_fixable": false,
+      "ota_package": null
+    },
+    {
+      "id": "CASE-012",
+      "tier_hint": "L1",
+      "dtc_ref": null,
+      "category": "connectivity",
+      "dealer_symptom": "Wi-Fi keeps showing as disabled even after the customer turns it on",
+      "resolution_summary": "Usually a stuck toggle-state bug, not a hardware fault. Ask the dealer to do a full power-off/on cycle (not just standby) first — resolves the large majority of these.",
+      "ota_fixable": true,
+      "ota_package": "HMI_PERF_PATCH_v1"
+    },
+    {
+      "id": "CASE-013",
+      "tier_hint": "L1",
+      "dtc_ref": null,
+      "category": "software",
+      "dealer_symptom": "Steering wheel control buttons occasionally don't register the first press",
+      "resolution_summary": "Known minor input-debounce issue on current software, cosmetic/annoyance only, does not affect safety-relevant functions. No action needed unless customer reports it affecting more than a couple of presses per drive.",
+      "ota_fixable": true,
+      "ota_package": "HMI_PERF_PATCH_v1"
+    }
+  ]
+}
